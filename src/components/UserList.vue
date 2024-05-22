@@ -9,12 +9,12 @@ console.log('users: ', props.users)
 <template>
   <div class="w-1/4 bg-white border-r border-gray-300">
     <div v-if="users" class="overflow-y-auto h-screen p-3 mb-9 pb-20">
-      <div v-for="user in users">
-        <UserListItem :name="user.name" />
+      <div v-for="user in users" :key="user.id">
+        <UserListItem :user="user" />
       </div>
     </div>
     <div v-else class="overflow-y-auto h-screen p-3 mb-9 pb-20">
-      <UserListItemSkeleton v-for="index in 3" />
+      <UserListItemSkeleton v-for="index in 3" :key="index" />
     </div>
   </div>
 </template>
