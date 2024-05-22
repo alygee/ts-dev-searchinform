@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import UserList from './components/UserList.vue'
 
-const users = ref([{ name: 'Alice' }, { name: 'Julia' }])
+const users = ref(null)
 
-created() {
-  // TODO fetch from file
-}
+onMounted(() => {
+  fetch('./users.json')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('HTTP error ' + response.status)
+      }
+      return response.json()
+    })
+    .then((json) => {
+      users.value = json
+      console.log(users.value)
+    })
+})
 </script>
 
 <template>
