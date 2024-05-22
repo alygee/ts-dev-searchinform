@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps(['user'])
 
-function getImageUrl(src) {
+function getImageUrl(src: string) {
   return new URL(src, import.meta.url).href
 }
 </script>

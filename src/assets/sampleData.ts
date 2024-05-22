@@ -1,6 +1,16 @@
 import { faker } from '@faker-js/faker'
 
-function generateFakeUser(id) {
+type User = {
+  id: number
+  name: string
+  company: string
+  jobTitle: string
+  jobArea: string
+  avatar: string
+  isActive: boolean
+}
+
+function generateFakeUser(id: number): User {
   const num = Math.floor(Math.random() * 3)
   const src = `../assets/images/user-${num}.jpg`
   const avatar = new URL(src, import.meta.url).href
@@ -16,7 +26,7 @@ function generateFakeUser(id) {
   }
 }
 
-export function generateFakeUsers(qty) {
+export function generateFakeUsers(qty: number): User[] {
   const users = []
   for (let i = 0; i < qty; ++i) {
     users.push(generateFakeUser(i))
