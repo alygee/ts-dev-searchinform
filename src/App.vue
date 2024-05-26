@@ -5,7 +5,7 @@ import type { User } from './assets/sampleData'
 import UserList from './components/UserList.vue'
 import UserDetails from './components/UserDetails.vue'
 
-const list = ref<HTMLElement | null>(null)
+const list = ref<Element | null>(null)
 const users = ref<User[] | null>(null)
 const visibleUsers = ref<User[] | null>(null)
 const userDetails = ref<User | null>(null)
@@ -21,17 +21,16 @@ onMounted(() => {
 })
 
 function goUp() {
-  if (page.value === 0) {
+  if (page.value === 0 || !list.value) {
     return
   }
 
   page.value = page.value - 1
 
   const prevScrollOffset = list.value.scrollHeight - list.value.scrollTop
-  visibleUsers.value = users.value.slice(
-    page.value * VISIBLE_USERS_COUNT,
-    (page.value + 2) * VISIBLE_USERS_COUNT
-  )
+  visibleUsers.value =
+    users.value?.slice(page.value * VISIBLE_USERS_COUNT, (page.value + 2) * VISIBLE_USERS_COUNT) ||
+    []
   list.value.scrollTop = list.value.scrollHeight - prevScrollOffset
 }
 
@@ -44,10 +43,9 @@ function goDown() {
     return
   }
 
-  visibleUsers.value = users.value.slice(
-    page.value * VISIBLE_USERS_COUNT,
-    (page.value + 2) * VISIBLE_USERS_COUNT
-  )
+  visibleUsers.value =
+    users.value?.slice(page.value * VISIBLE_USERS_COUNT, (page.value + 2) * VISIBLE_USERS_COUNT) ||
+    []
 }
 </script>
 

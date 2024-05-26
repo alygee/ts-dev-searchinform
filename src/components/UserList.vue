@@ -4,7 +4,7 @@ import type { User } from '../assets/sampleData'
 import UserListItem from './UserListItem.vue'
 import UserListItemSkeleton from './UserListItemSkeleton.vue'
 
-const props = defineProps<{ users: User[] }>()
+const props = defineProps<{ users: User[] | null }>()
 const emit = defineEmits<{
   (e: 'goUp'): void
   (e: 'goDown'): void
@@ -12,8 +12,8 @@ const emit = defineEmits<{
 }>()
 
 let observer: IntersectionObserver | null = null
-const firstElement = ref<HTMLElement | null>(null)
-const lastElement = ref<HTMLElement | null>(null)
+const firstElement = ref<Element | null>(null)
+const lastElement = ref<Element | null>(null)
 
 onMounted(() => {
   observer = new IntersectionObserver((entries) => {
@@ -35,8 +35,10 @@ watch(
   (newValue) => {
     if (newValue) {
       nextTick(() => {
-        observer.observe(lastElement.value)
-        observer.observe(firstElement.value)
+        if (lastElement.value && firstElement.value) {
+          observer?.observe(lastElement.value)
+          observer?.observe(firstElement.value)
+        }
       })
     }
   },

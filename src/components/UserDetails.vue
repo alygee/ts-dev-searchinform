@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { User } from '../assets/sampleData'
 
-defineProps<{ userDetails: User }>()
+defineProps<{ userDetails: User | null }>()
 </script>
 
 <template>
