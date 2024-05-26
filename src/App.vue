@@ -4,19 +4,22 @@ import { generateFakeUsers } from './assets/sampleData'
 import UserList from './components/UserList.vue'
 
 const users = ref(null)
-const chunk = ref(0)
+const visibleUsers = ref(null)
 
 onMounted(() => {
-  users.value = generateFakeUsers(100)
+  generateFakeUsers(1e5).then((data) => {
+    users.value = data
+    visibleUsers.value = data.slice(0, 20)
+  })
 })
 
-function getChunk() {
-  return users.value?.slice(0, 20)
+function goUp() {
+  console.log('piu')
 }
 </script>
 
 <template>
   <div class="max-w-screen-lg mx-auto bg-blue-100 h-screen">
-    <UserList :users="getChunk()" />
+    <UserList :users="visibleUsers" @goUp="goUp" />
   </div>
 </template>

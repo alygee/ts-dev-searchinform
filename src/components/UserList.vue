@@ -4,21 +4,21 @@ import UserListItem from './UserListItem.vue'
 import UserListItemSkeleton from './UserListItemSkeleton.vue'
 
 const props = defineProps(['users'])
+const emit = defineEmits(['goUp', 'goDown'])
 
 let observer = null
-const lastElement = ref('')
-
-function handleIntersect() {
-  console.log('handle intersect')
-}
+const firstElement = ref(null)
+const lastElement = ref(null)
 
 onMounted(() => {
-  observer = new IntersectionObserver(([entry]) => {
-    if (entry && entry.isIntersecting) {
-      handleIntersect()
-    } else {
-      console.log('piu')
-    }
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry && entry.isIntersecting) {
+        if (entry.target.id === 'firstElement') {
+          emit('goUp')
+        }
+      }
+    })
   })
 })
 
@@ -28,9 +28,11 @@ watch(
     if (newValue) {
       nextTick(() => {
         observer.observe(lastElement.value)
+        observer.observe(firstElement.value)
       })
     }
-  }
+  },
+  { once: true }
 )
 
 onBeforeUnmount(() => {
@@ -41,10 +43,11 @@ onBeforeUnmount(() => {
 <template>
   <div class="w-1/4 bg-white border-r border-gray-300">
     <div v-if="users" class="overflow-y-auto h-screen p-3 mb-9 pb-20">
+      <div id="firstElement" ref="firstElement" />
       <div v-for="user in users" :key="user.id">
         <UserListItem :user="user" />
       </div>
-      <div ref="lastElement" />
+      <div id="lastElement" ref="lastElement" />
     </div>
     <div v-else class="overflow-y-auto h-screen p-3 mb-9 pb-20">
       <UserListItemSkeleton v-for="index in 3" :key="index" />

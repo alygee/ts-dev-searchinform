@@ -12,7 +12,7 @@ function getImageUrl(src: string) {
       <img :src="user.avatar" :alt="user.name" class="w-12 h-12 rounded-full" />
     </div>
     <div class="flex-1">
-      <h2 class="text-lg font-semibold">{{ user.name }}</h2>
+      <h2 class="text-lg font-semibold">{{ user.id }}</h2>
     </div>
   </div>
 </template>

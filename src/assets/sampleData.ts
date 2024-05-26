@@ -26,10 +26,10 @@ function generateFakeUser(id: number): User {
   }
 }
 
-export function generateFakeUsers(qty: number): User[] {
+export function generateFakeUsers(qty: number): Promise<User[]> {
   const users = []
   for (let i = 0; i < qty; ++i) {
     users.push(generateFakeUser(i))
   }
-  return users
+  return Promise.resolve(users)
 }
