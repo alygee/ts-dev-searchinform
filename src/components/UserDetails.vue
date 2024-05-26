@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const props = defineProps(['userDetails'])
+import type { User } from '../assets/sampleData'
+
+defineProps<{ userDetails: User }>()
 </script>
 
 <template>

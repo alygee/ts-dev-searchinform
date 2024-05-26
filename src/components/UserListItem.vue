@@ -1,9 +1,7 @@
 <script setup lang="ts">
-const props = defineProps(['user'])
+import type { User } from '../assets/sampleData'
 
-function getImageUrl(src: string) {
-  return new URL(src, import.meta.url).href
-}
+defineProps<{ user: User }>()
 </script>
 
 <template>

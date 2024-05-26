@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import type { User } from '../assets/sampleData'
 import UserListItem from './UserListItem.vue'
 import UserListItemSkeleton from './UserListItemSkeleton.vue'
 
-const props = defineProps(['users'])
-const emit = defineEmits(['goUp', 'goDown', 'setUserDetails'])
+const props = defineProps<{ users: User[] }>()
+const emit = defineEmits<{
+  (e: 'goUp'): void
+  (e: 'goDown'): void
+  (e: 'setUserDetails', user: User): void
+}>()
 
-let observer = null
-const firstElement = ref(null)
-const lastElement = ref(null)
+let observer: IntersectionObserver | null = null
+const firstElement = ref<HTMLElement | null>(null)
+const lastElement = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   observer = new IntersectionObserver((entries) => {
@@ -42,7 +47,7 @@ onBeforeUnmount(() => {
   observer?.disconnect()
 })
 
-function selectUser(user) {
+function selectUser(user: User) {
   emit('setUserDetails', user)
 }
 </script>

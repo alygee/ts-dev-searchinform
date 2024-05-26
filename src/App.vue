@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { generateFakeUsers } from './assets/sampleData'
+import type { User } from './assets/sampleData'
 import UserList from './components/UserList.vue'
 import UserDetails from './components/UserDetails.vue'
 
-const list = ref(null)
-const users = ref(null)
-const visibleUsers = ref(null)
-const userDetails = ref(null)
-const page = ref(0)
+const list = ref<HTMLElement | null>(null)
+const users = ref<User[] | null>(null)
+const visibleUsers = ref<User[] | null>(null)
+const userDetails = ref<User | null>(null)
+const page = ref<number>(0)
 const VISIBLE_USERS_COUNT = 20
 const TOTAL_USERS_COUNT = 1e2
 
