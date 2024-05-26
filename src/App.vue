@@ -3,23 +3,55 @@ import { ref, onMounted } from 'vue'
 import { generateFakeUsers } from './assets/sampleData'
 import UserList from './components/UserList.vue'
 
+const list = ref(null)
 const users = ref(null)
 const visibleUsers = ref(null)
+const page = ref(0)
+const VISIBLE_USERS_COUNT = 20
+const TOTAL_USERS_COUNT = 1e3
 
 onMounted(() => {
-  generateFakeUsers(1e5).then((data) => {
+  generateFakeUsers(TOTAL_USERS_COUNT).then((data) => {
     users.value = data
-    visibleUsers.value = data.slice(0, 20)
+    visibleUsers.value = data.slice(0, VISIBLE_USERS_COUNT)
   })
 })
 
 function goUp() {
-  console.log('piu')
+  if (page.value === 0) {
+    return
+  }
+
+  page.value = page.value - 1
+
+  const prevScrollOffset = list.value.scrollHeight - list.value.scrollTop
+  visibleUsers.value = users.value.slice(
+    page.value * VISIBLE_USERS_COUNT,
+    (page.value + 2) * VISIBLE_USERS_COUNT
+  )
+  list.value.scrollTop = list.value.scrollHeight - prevScrollOffset
+}
+
+function goDown() {
+  page.value = page.value + 1
+
+  const isLastPage = page.value === TOTAL_USERS_COUNT / VISIBLE_USERS_COUNT
+
+  if (isLastPage) {
+    return
+  }
+
+  visibleUsers.value = users.value.slice(
+    page.value * VISIBLE_USERS_COUNT,
+    (page.value + 2) * VISIBLE_USERS_COUNT
+  )
 }
 </script>
 
 <template>
   <div class="max-w-screen-lg mx-auto bg-blue-100 h-screen">
-    <UserList :users="visibleUsers" @goUp="goUp" />
+    <div ref="list">
+      <UserList :users="visibleUsers" @goUp="goUp" @goDown="goDown" />
+    </div>
   </div>
 </template>

@@ -17,6 +17,9 @@ onMounted(() => {
         if (entry.target.id === 'firstElement') {
           emit('goUp')
         }
+        if (entry.target.id === 'lastElement') {
+          emit('goDown')
+        }
       }
     })
   })
@@ -44,9 +47,9 @@ onBeforeUnmount(() => {
   <div class="w-1/4 bg-white border-r border-gray-300">
     <div v-if="users" class="overflow-y-auto h-screen p-3 mb-9 pb-20">
       <div id="firstElement" ref="firstElement" />
-      <div v-for="user in users" :key="user.id">
+      <template v-for="user in users" :key="user.id">
         <UserListItem :user="user" />
-      </div>
+      </template>
       <div id="lastElement" ref="lastElement" />
     </div>
     <div v-else class="overflow-y-auto h-screen p-3 mb-9 pb-20">
