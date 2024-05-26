@@ -51,7 +51,14 @@ function goDown() {
 </script>
 
 <template>
-  <div class="max-w-screen-lg mx-auto h-screen flex">
+  <header class="text-center p-12 border-b-2 mb-12">
+    <p class="text-2xl font-bold">Test task for searchinform company.</p>
+    <p class="text-lg font-semibold">
+      Done by
+      <a href="https://github.com/alygee" class="italic border-b border-black">Albert Allagulov</a>
+    </p>
+  </header>
+  <main class="max-w-screen-lg mx-auto h-screen flex">
     <div ref="list" class="w-1/3 bg-white border-r border-gray-300">
       <UserList
         :users="visibleUsers"
@@ -63,5 +70,5 @@ function goDown() {
     <div class="w-2/3 bg-white">
       <UserDetails :userDetails="userDetails" />
     </div>
-  </div>
+  </main>
 </template>
