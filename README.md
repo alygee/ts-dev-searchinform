@@ -1,18 +1,17 @@
-# ts-dev-searchinform
+# test task for SearchInform
 
-This template should help get you started developing with Vue 3 in Vite.
+## О проекте
 
-## Recommended IDE Setup
+Проект выполнен на `Vue3` и `TypeScript`. Для стилизации используется `TailwindCSS`.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### Генерация данных
 
-## Type Support for `.vue` Imports in TS
+Данные создаются динамически во время загрузки страницы с помощью библиотеки `fakerjs`. Как возможный вариант, данные можно вынести в json-файл, чтобы имитировать загрузку с бэкенда. Для оптимизации нагрузки во время открытия страницы можно было бы генерировать и добавлять данные частями, чтобы не "блокировать" основной поток.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+### Рендеринг списка и cкроллинг
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Для рендеринга 1e6 записей я ограничил количество выводимых пользователей на экран.
+Скроллинг реализовал через IntersectionObserver.
 
 ## Project Setup
 
