@@ -4,7 +4,7 @@ import UserListItem from './UserListItem.vue'
 import UserListItemSkeleton from './UserListItemSkeleton.vue'
 
 const props = defineProps(['users'])
-const emit = defineEmits(['goUp', 'goDown'])
+const emit = defineEmits(['goUp', 'goDown', 'setUserDetails'])
 
 let observer = null
 const firstElement = ref(null)
@@ -41,19 +41,21 @@ watch(
 onBeforeUnmount(() => {
   observer?.disconnect()
 })
+
+function selectUser(user) {
+  emit('setUserDetails', user)
+}
 </script>
 
 <template>
-  <div class="w-1/4 bg-white border-r border-gray-300">
-    <div v-if="users" class="overflow-y-auto h-screen p-3 mb-9 pb-20">
-      <div id="firstElement" ref="firstElement" />
-      <template v-for="user in users" :key="user.id">
-        <UserListItem :user="user" />
-      </template>
-      <div id="lastElement" ref="lastElement" />
-    </div>
-    <div v-else class="overflow-y-auto h-screen p-3 mb-9 pb-20">
-      <UserListItemSkeleton v-for="index in 3" :key="index" />
-    </div>
+  <div v-if="users" class="overflow-y-auto h-screen p-3 mb-9 pb-20">
+    <div id="firstElement" ref="firstElement" />
+    <template v-for="user in users" :key="user.id">
+      <UserListItem :user="user" @click="selectUser(user)" />
+    </template>
+    <div id="lastElement" ref="lastElement" />
+  </div>
+  <div v-else class="overflow-y-auto h-screen p-3 mb-9 pb-20">
+    <UserListItemSkeleton v-for="index in 3" :key="index" />
   </div>
 </template>

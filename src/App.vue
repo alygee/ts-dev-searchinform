@@ -2,13 +2,15 @@
 import { ref, onMounted } from 'vue'
 import { generateFakeUsers } from './assets/sampleData'
 import UserList from './components/UserList.vue'
+import UserDetails from './components/UserDetails.vue'
 
 const list = ref(null)
 const users = ref(null)
 const visibleUsers = ref(null)
+const userDetails = ref(null)
 const page = ref(0)
 const VISIBLE_USERS_COUNT = 20
-const TOTAL_USERS_COUNT = 1e3
+const TOTAL_USERS_COUNT = 1e2
 
 onMounted(() => {
   generateFakeUsers(TOTAL_USERS_COUNT).then((data) => {
@@ -49,9 +51,17 @@ function goDown() {
 </script>
 
 <template>
-  <div class="max-w-screen-lg mx-auto bg-blue-100 h-screen">
-    <div ref="list">
-      <UserList :users="visibleUsers" @goUp="goUp" @goDown="goDown" />
+  <div class="max-w-screen-lg mx-auto h-screen flex">
+    <div ref="list" class="w-1/3 bg-white border-r border-gray-300">
+      <UserList
+        :users="visibleUsers"
+        @goUp="goUp"
+        @goDown="goDown"
+        @setUserDetails="userDetails = $event"
+      />
+    </div>
+    <div class="w-2/3 bg-white">
+      <UserDetails :userDetails="userDetails" />
     </div>
   </div>
 </template>
