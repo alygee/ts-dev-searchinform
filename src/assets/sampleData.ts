@@ -12,7 +12,7 @@ export type User = {
 
 function generateFakeUser(id: number): User {
   const num = Math.floor(Math.random() * 3)
-  const src = `../assets/images/user-${num}.jpg`
+  const src = `/images/user-${num}.jpg`
   const avatar = new URL(src, import.meta.url).href
 
   return {
